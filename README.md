@@ -1,38 +1,56 @@
-TODO List Flutter Application
-This Flutter application is designed to manage tasks efficiently using three major folders that play key roles in building the user interface:
+Task Management To-Do List App
 
-Folder Structure
-1. model
-The model folder is responsible for defining the structure of the to-do items:
+Overview:
 
-To-Do Item Model:
-name: The name of the task that will be displayed.
-id: A unique identifier used for functionality like deleting a specific item.
-isCompleted: A boolean value indicating whether the task is accomplished.
-2. screens
-The screens folder handles the UI views of the application, containing all the widgets used throughout:
+This task management to-do list app allows users to organize their tasks, set deadlines, and track completion status. Users can add, edit, and delete tasks, as well as view them based on different categories (all, completed, pending).
 
-Task List Screen:
-Displays the list of tasks with checkboxes and delete icons for each task.
-Add Task Screen:
-Allows users to add new tasks with input fields for task name.
-3. widgets
-The widgets folder contains reusable components that control the elements inside the task container:
-
-Task Widget:
-Manages the layout and behavior of individual tasks displayed in the list.
-Includes a checkbox to mark task completion and an icon for deleting the task.
 Features
-Task Management:
-Add, edit, and delete tasks.
-Mark tasks as completed or pending.
-Folder Descriptions
-model
-This folder defines the data structure for the to-do items used in the application.
 
-screens
-Screens are responsible for rendering the user interface of different parts of the app, such as the task list and add task screens.
+Task List: Display a list of tasks with their descriptions.
 
-widgets
-Widgets are reusable components that encapsulate UI elements and behavior, making it easier to build and maintain the app's interface.
+Task Completion: Mark tasks as completed or pending.
 
+Deadline: Set deadlines for tasks.
+
+Priority: Assign priority levels (low, medium, high) to tasks.
+
+Add New Task: Easily add new tasks to the list.
+
+Delete Task: Remove tasks when no longer needed.
+
+
+Installation:
+
+Clone this repository to your local machine.
+
+Ensure you have Flutter and Dart installed.
+
+Run flutter pub get to install dependencies.
+
+Launch the app using flutter run.
+
+Usage:
+
+Open the app.
+
+View the list of tasks.
+
+Tap on a task to mark it as completed or pending.
+
+Add new tasks using the “+” button.
+
+Swipe left on a task to delete it.
+
+Code Structure
+
+lib/: Contains the main Dart code.
+
+model/todo.dart: Defines the ToDo class for task management.
+
+widgets/todo_item.dart: Displays individual task items.
+
+screens/tasks_screen.dart: Main screen with task list and category filters.
+
+Dependencies
+flutter_local_notifications: Used for task reminders.
+intl: For date formatting.
