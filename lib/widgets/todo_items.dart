@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/model/todo.dart';
-// Widget representing a single ToDo item in the list
+import 'package:intl/intl.dart'; // Import date formatting utilities
+import 'package:todolist/model/todo.dart'; // Import the ToDo model class
+
 class ToDoItem extends StatelessWidget {
   final ToDo todo; // The ToDo object associated with this item
   final Function(ToDo) onToDoChanged; // Callback function for task completion status change
   final Function(String) onDeleteItem; // Callback function for task deletion
 
-  // Constructor for ToDoItem, taking required parameters
+  //constructor for ToDoItem taking the required paramaters
   const ToDoItem({
     Key? key,
     required this.todo,
@@ -17,48 +18,54 @@ class ToDoItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(bottom: 20),  // Set margin for the ListTile container
+      margin: EdgeInsets.only(bottom: 20), //setting margin for ListTile Container
       child: ListTile(
         onTap: () {
-          onToDoChanged(todo);  // Invoke callback function when the item is tapped
+          onToDoChanged(todo); // Invoke the callback function when the item is tapped
         },
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),  // Set rounded corners for the ListTile
-          ),
+          borderRadius: BorderRadius.circular(20),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),  // Set content padding
-        tileColor: Colors.white,  // Set background color of the ListTile
-        leading: Icon(
-          todo.isDone ? Icons.check_box : Icons.check_box_outline_blank,  // Display check box icon based on completion status
-          color: Colors.blue,  // Set icon color to blue
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        tileColor: todo.isDone ? Colors.grey[300] : Colors.white, // Set tile color based on task completion
+        leading: Checkbox(
+          value: todo.isDone,
+          onChanged: (newValue) {
+            // Toggle task completion status
+            ToDo updatedToDo = todo.copyWith(isDone: newValue ?? false); // Create a copy of the task with updated completion status
+            onToDoChanged(updatedToDo); // Invoke the callback function with the updated task
+          },
+          activeColor: Colors.blue, // Set color of the checkbox when checked
         ),
-        title: Text(
-          todo.todoText,  // Display the task text
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.brown,
-            decoration: todo.isDone ? TextDecoration.lineThrough : null,  // Apply strikethrough decoration if task is completed
-          ),
-        ),
-        trailing: Container(
-          padding: EdgeInsets.all(0),
-          margin: EdgeInsets.symmetric(vertical: 12),
-          height: 35,
-          width: 35,
-          decoration: BoxDecoration(
-            color: Colors.red,  // Set background color of the delete button container to red
-            borderRadius: BorderRadius.circular(5),  // Set rounded corners for the delete button container
-          ),
-          child: IconButton(
-            onPressed: () {
-              onDeleteItem(todo.id);  // Invoke callback function when delete button is pressed, passing task ID
-            },
-            icon: Icon(
-              Icons.delete,
-              size: 18,
-              color: Colors.green,  // Set icon color to white
+        title: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              todo.todoText, // Display the task text
+              style: TextStyle(
+                fontSize: 16,
+                color: todo.isDone ? Colors.grey : Colors.black, // Set text color based on task completion
+                decoration: todo.isDone ? TextDecoration.lineThrough : null, // Apply strikethrough decoration if task is completed
+              ),
             ),
+            if (todo.deadline != null)
+              Text(
+                'Deadline: ${DateFormat('MMM dd, yyyy').format(todo.deadline!)}', // Display task deadline if set
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.red,
+                ),
+              ),
+          ],
+        ),
+        trailing: IconButton(
+          onPressed: () {
+            onDeleteItem(todo.id); // Invoke the callback function to delete the task
+          },
+          icon: Icon(
+            Icons.delete,
+            size: 24,
+            color: Colors.red, // Set icon color to red
           ),
         ),
       ),
